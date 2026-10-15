@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="دفتر الصداقة: موقع عربي عن صفات الصديق الحقيقي وأنواع الأصدقاء ومواقف وأمثال ومولّد رسائل.">
+<title>دفتر الصداقة</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Reem+Kufi:wght@500;700&display=swap">
+<style>
+/* Layout: sticky header with scroll-spy and a progress line; hero with a saying card; then one section per interaction (tabs, expandable cards, scenario stepper, saying filter, message maker, checklist, FAQ). Palette: Tunisian blue and white, jasmine-gold accent used sparingly. */
+:root{
+  --bg:#F3F7FA;
+  --surface:#FFFFFF;
+  --ink:#14263B;
+  --muted:#556779;
+  --blue:#1D5FA8;
+  --on-blue:#FFFFFF;
+  --sun:#C98A12;
+  --sun-soft:#F7EBCF;
+  --line:#D6E0E9;
+  --tint:#E6EFF8;
+  --good:#1E8A5B;
+  --bad:#B8402F;
+  --f-display:"Reem Kufi","Noto Kufi Arabic",Tahoma,sans-serif;
+  --f-body:"IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1A28;--surface:#15263A;--ink:#EAF0F6;--muted:#A0B2C4;--blue:#6FA8E6;--on-blue:#0E1A28;--sun:#EBBF5B;--sun-soft:#3A3217;--line:#26394F;--tint:#1A2E45;--good:#5CC596;--bad:#EE8272;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1A28;--surface:#15263A;--ink:#EAF0F6;--muted:#A0B2C4;--blue:#6FA8E6;--on-blue:#0E1A28;--sun:#EBBF5B;--sun-soft:#3A3217;--line:#26394F;--tint:#1A2E45;--good:#5CC596;--bad:#EE8272;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{direction:rtl;font-family:var(--f-body);font-size:17px;line-height:1.9;background:var(--bg);color:var(--ink)}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.35;margin:0;text-wrap:balance}
+p{margin:0}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:6px}
+.band{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.inner{max-width:1080px;margin-inline:auto}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.progress{position:absolute;inset-inline:0;bottom:-1px;height:3px;background:var(--sun);transform:scaleX(0);transform-origin:right}
+.bar{display:flex;align-items:center;gap:12px;padding-block:10px}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.25rem;color:var(--ink);text-decoration:none;white-space:nowrap}
+.nav{display:flex;gap:2px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{color:var(--muted);text-decoration:none;padding:2px 12px;border-radius:999px;font-size:.95rem;white-space:nowrap;line-height:2}
+.nav a:hover{background:var(--tint);color:var(--ink)}
+.nav a[aria-current="true"]{background:var(--blue);color:var(--on-blue)}
+.tools{display:flex;gap:8px;margin-inline-start:auto}
+.pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:2px 14px;font-size:.9rem;line-height:2;cursor:pointer;white-space:nowrap}
+.pill:hover{border-color:var(--blue)}
+.menu-btn{display:none}
+
+/* common */
+section{padding-block:56px;scroll-margin-top:64px}
+.sec-head{margin-bottom:26px;max-width:62ch}
+.rule{width:56px;height:4px;background:var(--sun);border-radius:2px;margin-bottom:14px}
+.sec-head h2{font-size:clamp(1.8rem,4.2vw,2.5rem);margin-bottom:6px}
+.sec-head p{color:var(--muted)}
+.btn{display:inline-block;border:0;border-radius:999px;padding:6px 24px;background:var(--blue);color:var(--on-blue);font-weight:500;text-decoration:none;cursor:pointer;line-height:1.9}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.btn.ghost:hover{background:var(--tint);filter:none}
+.btn.small{padding:2px 16px;font-size:.92rem}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;min-width:0}
+
+/* hero */
+.hero{padding-block:48px 40px}
+.hero .inner{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:36px;align-items:center}
+.eyebrow{font-size:.9rem;letter-spacing:.04em;color:var(--blue);font-weight:600;margin-bottom:6px}
+.hero h1{font-size:clamp(3.4rem,10vw,6.2rem);line-height:1.1;margin-bottom:16px}
+.lead{font-size:1.25rem;font-weight:300;color:var(--muted);max-width:32ch;margin-bottom:24px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.visual{display:grid;gap:14px;justify-items:center;min-width:0}
+.rings{width:100%;max-width:330px;height:auto}
+.today{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 20px;border-top:4px solid var(--sun)}
+.today small{display:block;color:var(--muted);font-size:.85rem;letter-spacing:.04em}
+.today q{display:block;quotes:none;font-family:var(--f-display);font-size:1.35rem;line-height:1.5;margin:2px 0 8px}
+.today .row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.today .row span{color:var(--muted);font-size:.93rem;flex:1 1 160px;min-width:0}
+
+/* qualities tabs */
+.qwrap{display:grid;grid-template-columns:minmax(0,250px) minmax(0,1fr);gap:20px}
+.qlist{display:grid;gap:8px;align-content:start}
+.qbtn{display:flex;align-items:center;gap:12px;text-align:start;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:6px 14px;cursor:pointer;font-weight:500}
+.qbtn:hover{border-color:var(--blue)}
+.qbtn[aria-selected="true"]{background:var(--blue);color:var(--on-blue);border-color:var(--blue)}
+.g{display:grid;place-items:center;width:34px;height:34px;flex:none;border-radius:50%;background:var(--tint);color:var(--blue);font-family:var(--f-display);font-weight:700;line-height:1}
+.qbtn[aria-selected="true"] .g{background:var(--on-blue);color:var(--blue)}
+.qpanel h3{font-size:1.7rem;margin-bottom:6px}
+.qpanel .desc{font-size:1.1rem;margin-bottom:16px}
+.qbox{display:grid;gap:12px}
+.qbox div{border-radius:12px;padding:12px 16px;background:var(--tint)}
+.qbox b{display:block;font-size:.85rem;color:var(--blue);letter-spacing:.04em;font-weight:600}
+.qbox .ask{background:var(--sun-soft)}
+.qbox .ask b{color:var(--sun)}
+
+/* types */
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+details.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:0;min-width:0}
+details.card summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:var(--f-display);font-weight:700;font-size:1.2rem}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::after,details.faq summary::after{content:"+";font-family:var(--f-body);font-size:1.5rem;color:var(--blue);line-height:1;flex:none}
+details[open]>summary::after{content:"\2212"}
+details.card .body{padding:0 20px 18px;display:grid;gap:10px}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;border-radius:999px;padding:0 10px;margin-inline-end:8px;line-height:1.8}
+.tag.up{background:var(--tint);color:var(--blue)}
+.tag.warn{background:var(--sun-soft);color:var(--sun)}
+
+/* scenarios */
+.stepper{max-width:760px}
+.sc-meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:.92rem;margin-bottom:10px}
+.dots{display:flex;gap:6px;align-items:center}
+.dots i{width:22px;height:5px;border-radius:3px;background:var(--line)}
+.dots i.on{background:var(--blue)}
+.sc-q{font-family:var(--f-display);font-size:1.4rem;line-height:1.55;margin-bottom:16px}
+.choices{display:grid;gap:10px}
+.choice{text-align:start;border:1.5px solid var(--line);background:var(--bg);border-radius:14px;padding:10px 16px;cursor:pointer;line-height:1.7}
+.choice:hover:not(:disabled){border-color:var(--blue)}
+.choice:disabled{cursor:default}
+.choice.good{border-color:var(--good)}
+.choice.ok{border-color:var(--sun)}
+.choice.bad{border-color:var(--bad)}
+.verdict{margin-top:16px;border-radius:12px;padding:12px 16px;background:var(--tint)}
+.verdict b{display:block;margin-bottom:2px}
+.verdict.good b{color:var(--good)}
+.verdict.ok b{color:var(--sun)}
+.verdict.bad b{color:var(--bad)}
+.sc-foot{margin-top:16px;display:flex;gap:10px;justify-content:flex-end}
+.big{font-family:var(--f-display);font-size:2.2rem;color:var(--blue);font-variant-numeric:tabular-nums}
+
+/* sayings */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:0 16px;line-height:2.2;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--blue);color:var(--on-blue);border-color:var(--blue)}
+.sayings{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.saying{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--sun);border-radius:4px 4px 16px 16px;padding:16px 20px;display:grid;gap:6px;align-content:start;min-width:0}
+.saying q{quotes:none;font-family:var(--f-display);font-size:1.4rem;line-height:1.5}
+.saying p{color:var(--muted);font-size:.96rem;line-height:1.8}
+.saying .row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:4px}
+
+/* letter */
+.letter{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:20px;align-items:start}
+.fields{display:grid;gap:14px}
+.fields label{display:grid;gap:4px;font-size:.92rem;color:var(--muted)}
+.fields input,.fields select{border:1.5px solid var(--line);background:var(--bg);border-radius:12px;padding:6px 12px;color:var(--ink);width:100%;min-width:0}
+.fields input:focus,.fields select:focus,textarea:focus{outline:3px solid var(--sun);outline-offset:1px}
+#out{width:100%;min-height:200px;resize:vertical;border:1.5px solid var(--line);background:var(--bg);border-radius:12px;padding:14px;line-height:1.9;color:var(--ink)}
+.out-row{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.out-row span{color:var(--muted);font-size:.92rem}
+
+/* quiz */
+.quiz{max-width:780px}
+.quiz ul{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:6px}
+.quiz label{display:flex;gap:12px;align-items:flex-start;padding:8px 12px;border-radius:12px;cursor:pointer;line-height:1.7}
+.quiz label:hover{background:var(--tint)}
+.quiz input{appearance:none;flex:none;width:22px;height:22px;margin:3px 0 0;border:2px solid var(--blue);border-radius:6px;background:transparent;display:grid;place-items:center;cursor:pointer}
+.quiz input:checked{background:var(--blue)}
+.quiz input:checked::after{content:"";width:5px;height:10px;border:solid var(--on-blue);border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
+.result{border-radius:14px;background:var(--tint);padding:16px 18px;display:grid;gap:10px}
+.result .top-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.meter{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--blue);transition:width .3s ease;margin-inline-start:0}
+
+/* faq */
+.faqs{display:grid;gap:10px;max-width:780px}
+details.faq{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+details.faq summary{list-style:none;cursor:pointer;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:500}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq p{padding:0 18px 16px;color:var(--muted)}
+
+footer{border-top:1px solid var(--line);padding-block:36px 56px}
+footer .inner{display:flex;gap:16px;justify-content:space-between;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:.95rem}
+.flinks{display:flex;gap:6px 14px;flex-wrap:wrap}
+.flinks a{color:var(--blue)}
+
+@media (max-width:900px){
+  .menu-btn{display:inline-block}
+  .nav{display:none;position:absolute;top:100%;inset-inline:0;flex-direction:column;background:var(--surface);border-bottom:1px solid var(--line);padding:8px max(16px,env(safe-area-inset-left,0px)) 12px max(16px,env(safe-area-inset-right,0px));overflow:visible}
+  .nav.open{display:flex}
+  .nav a{padding:4px 14px;font-size:1rem}
+}
+@media (max-width:760px){
+  body{font-size:16px}
+  section{padding-block:40px}
+  .hero{padding-block:28px 24px}
+  .hero .inner,.qwrap,.letter,.cards{grid-template-columns:minmax(0,1fr)}
+  .rings{max-width:200px}
+  .qlist{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .panel{padding:18px}
+  .sc-foot{justify-content:stretch}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.meter i{transition:none}}
+</style>
+
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div lang="ar" dir="rtl">
+<header class="top">
+  <div class="progress" id="progress"></div>
+  <div class="band">
+    <div class="inner bar">
+      <a class="brand" href="#home">دفتر الصداقة</a>
+      <nav class="nav" id="nav" aria-label="أقسام الموقع">
+        <a href="#home">الرئيسية</a>
+        <a href="#qualities">الصفات</a>
+        <a href="#types">الأنواع</a>
+        <a href="#scenarios">مواقف</a>
+        <a href="#sayings">أقوال</a>
+        <a href="#letter">رسالة</a>
+        <a href="#quiz">اختبار</a>
+        <a href="#faq">أسئلة</a>
+      </nav>
+      <div class="tools">
+        <button type="button" class="pill" id="themeBtn">الوضع الداكن</button>
+        <button type="button" class="pill menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">القائمة</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="home" class="hero band">
+    <div class="inner">
+      <div>
+        <div class="eyebrow">عن الصديق والرفقة</div>
+        <h1>الصداقة</h1>
+        <p class="lead">الصديق الحقيقي هو من يبقى حين تضيق الأيام، ويفرح لك حين تتسع. هنا ستتعرف على صفاته، وتجرب مواقف، وتكتب رسالة لصديقك.</p>
+        <div class="cta">
+          <a class="btn" href="#qualities">ابدأ الاستكشاف</a>
+          <a class="btn ghost" href="#quiz">اختبر صداقتك</a>
+        </div>
+      </div>
+      <div class="visual">
+        <svg class="rings" viewBox="0 0 360 300" role="img" aria-label="نجمة ثمانية ودائرتان متداخلتان ترمزان إلى صديقين">
+          <rect x="80" y="50" width="200" height="200" fill="none" stroke="var(--line)" stroke-width="2"/>
+          <rect x="80" y="50" width="200" height="200" fill="none" stroke="var(--line)" stroke-width="2" transform="rotate(45 180 150)"/>
+          <circle cx="142" cy="150" r="70" fill="var(--blue)" fill-opacity="0.18" stroke="var(--blue)" stroke-width="3"/>
+          <circle cx="218" cy="150" r="70" fill="var(--sun)" fill-opacity="0.22" stroke="var(--sun)" stroke-width="3"/>
+          <circle cx="180" cy="150" r="5" fill="var(--ink)"/>
+        </svg>
+        <div class="today" aria-live="polite">
+          <small>قول اليوم</small>
+          <q id="todayQ"></q>
+          <div class="row"><span id="todayM"></span><button type="button" class="btn ghost small" id="todayBtn">قول آخر</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="qualities" class="band">
+    <div class="inner">
+      <div class="sec-head">
+        <div class="rule"></div>
+        <h2>صفات الصديق الحقيقي</h2>
+        <p>اختر صفة لتقرأ معناها ومثالاً عليها وسؤالاً تسأله لنفسك.</p>
+      </div>
+      <div class="qwrap">
+        <div class="qlist" id="qlist" role="tablist" aria-label="الصفات"></div>
+        <div class="panel qpanel" id="qpanel" role="tabpanel"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="types" class="band">
+    <div class="inner">
+      <div class="sec-head">
+        <div class="rule"></div>
+        <h2>أنواع الأصدقاء</h2>
+        <p>لكل نوع من الصداقة قوته وما يحتاج إلى انتباه. اضغط على البطاقة لتفتحها.</p>
+      </div>
+      <div class="cards">
+        <details class="card" open>
+          <summary>صديق الطفولة</summary>
+          <div class="body">
+            <p><span class="tag up">قوته</span>تاريخ مشترك وذكريات لا يعرفها غيركما، وثقة بُنيت عبر سنوات.</p>
+            <p><span class="tag warn">انتبه</span>قد تتغير اهتماماتكما مع الوقت، فتحتاجان إلى تعارف جديد من حين لآخر.</p>
+          </div>
+        </details>
+        <details class="card">
+          <summary>زميل العمل أو الدراسة</summary>
+          <div class="body">
+            <p><span class="tag up">قوته</span>يفهم ضغوطك اليومية لأنه يعيشها معك، ويشاركك الخبرة والنصيحة.</p>
+            <p><span class="tag warn">انتبه</span>افصل بين أسرار الصداقة وأمور العمل، حتى لا يتأذى أحدكما.</p>
+          </div>
+        </details>
+        <details class="card">
+          <summary>صديق الإنترنت</summary>
+          <div class="body">
+            <p><span class="tag up">قوته</span>يجمعكما اهتمام مشترك مهما بعدت المسافة، وقد تجد عنده من يفهمك أكثر.</p>
+            <p><span class="tag warn">انتبه</span>تعرّف عليه بالتدريج قبل أن تشارك معلومات شخصية أو مالية.</p>
+          </div>
+        </details>
+        <details class="card">
+          <summary>رفيق السفر والهواية</summary>
+          <div class="body">
+            <p><span class="tag up">قوته</span>تعيشان تجارب جديدة معاً، والمواقف الصعبة في الطريق تكشف الطباع.</p>
+            <p><span class="tag warn">انتبه</span>حاولا أن تلتقيا في أوقات عادية أيضاً، لا في المناسبات وحدها.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="scenarios" class="band">
+    <div class="inner">
+      <div class="sec-head">
+        <div class="rule"></div>
+        <h2>ماذا تفعل في هذا الموقف؟</h2>
+        <p>أربعة مواقف يمرّ بها الأصدقاء. اختر ما تراه مناسباً وستعرف رأي الدفتر.</p>
+      </div>
+      <div class="panel stepper" id="sc"></div>
+    </div>
+  </section>
+
+  <section id="sayings" class="band">
+    <div class="inner">
+      <div class="sec-head">
+        <div class="rule"></div>
+        <h2>أقوال وأمثال عن الصديق</h2>
+        <p>أمثال عربية متداولة جمعت تجربة الناس مع الأصدقاء في عبارات قصيرة.</p>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="تصفية الأقوال"></div>
+      <div class="sayings" id="sayings"></div>
+    </div>
+  </section>
+
+  <section id="letter" class="band">
+    <div class="inner">
+      <div class="sec-head">
+        <div class="rule"></div>
+        <h2>اكتب رسالة لصديقك</h2>
+        <p>اختر المناسبة والنبرة، وعدّل الرسالة كما تشاء قبل أن تنسخها وترسلها.</p>
+      </div>
+      <div class="letter">
+        <div class="panel fields">
+          <label for="fname">اسم صديقك (اختياري)<input type="text" id="fname" placeholder="مثال: سامي" autocomplete="off"></label>
+          <label for="fgender">الصديق<select id="fgender"><option value="m">صديق</option><option value="f">صديقة</option></select></label>
+          <label for="focc">المناسبة<select id="focc">
+            <option value="miss">اشتياق</option>
+            <option value="thanks">شكر</option>
+            <option value="sorry">اعتذار</option>
+            <option value="congrats">تهنئة</option>
+            <option value="encourage">تشجيع</option>
+          </select></label>
+          <label for="ftone">النبرة<select id="ftone"><option value="warm">دافئة</option><option value="short">قصيرة</option></select></label>
+        </div>
+        <div class="panel">
+          <label for="out" style="display:block;color:var(--muted);font-size:.92rem;margin-bottom:6px">الرسالة</label>
+          <textarea id="out" rows="8"></textarea>
+          <div class="out-row">
+            <button type="button" class="btn" id="copyLetter">نسخ الرسالة</button>
+            <span id="copyHint"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz" class="band">
+    <div class="inner">
+      <div class="sec-head">
+        <div class="rule"></div>
+        <h2>اختبر صداقتك</h2>
+        <p>فكّر في صديق واحد، وضع علامة على العبارات التي تنطبق عليه. هذا تأمل شخصي، ولا تُحفظ إجاباتك.</p>
+      </div>
+      <form class="panel quiz" id="quizForm" onsubmit="return false">
+        <ul>
+          <li><label for="q1"><input type="checkbox" id="q1">يسمعني حين أتحدث دون أن يقاطعني أو يستخف بي.</label></li>
+          <li><label for="q2"><input type="checkbox" id="q2">أستطيع أن أقول له رأيي بصراحة وأنا مطمئن.</label></li>
+          <li><label for="q3"><input type="checkbox" id="q3">يفرح لنجاحي كما يفرح لنفسه.</label></li>
+          <li><label for="q4"><input type="checkbox" id="q4">يحفظ سرّي ولا ينقله لغيره.</label></li>
+          <li><label for="q5"><input type="checkbox" id="q5">يسأل عني حتى في الأيام العادية.</label></li>
+          <li><label for="q6"><input type="checkbox" id="q6">أعود من لقائه وأنا أحسن حالاً.</label></li>
+          <li><label for="q7"><input type="checkbox" id="q7">يعتذر حين يخطئ دون أن أطلب منه ذلك.</label></li>
+          <li><label for="q8"><input type="checkbox" id="q8">أستطيع أن أطلب مساعدته دون حرج.</label></li>
+        </ul>
+        <div class="result" aria-live="polite">
+          <div class="top-row">
+            <span class="big" id="score">0 / 8</span>
+            <span id="msg" style="flex:1 1 220px;min-width:0">ضع علامة على ما ينطبق على صديقك لترى النتيجة.</span>
+            <button type="button" class="btn ghost small" id="reset">إعادة</button>
+          </div>
+          <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section id="faq" class="band">
+    <div class="inner">
+      <div class="sec-head">
+        <div class="rule"></div>
+        <h2>أسئلة يسألها الناس</h2>
+      </div>
+      <div class="faqs">
+        <details class="faq" open>
+          <summary>كيف أبدأ صداقة جديدة؟</summary>
+          <p>ابدأ بما يجمعكما: مكان، أو هواية، أو عمل. حدّثه عن أمر بسيط، واسأله عن رأيه، ثم اقترح لقاءً قصيراً. الصداقة تكبر بالتكرار والاهتمام الصادق، لا بالجلسة الواحدة الطويلة.</p>
+        </details>
+        <details class="faq">
+          <summary>صديقي يبتعد عني، ماذا أفعل؟</summary>
+          <p>أرسل له رسالة قصيرة تسأل عنه دون عتاب. قد يكون مشغولاً أو يمرّ بظرف لا تعرفه. إن استمر الابتعاد، تحدّث معه بهدوء عمّا تشعر به واسمع ما عنده.</p>
+        </details>
+        <details class="faq">
+          <summary>هل الصداقة عبر الإنترنت حقيقية؟</summary>
+          <p>نعم، إذا قامت على الصدق والاحترام والتواصل المنتظم. الفرق أن الثقة تحتاج وقتاً أطول، فلا تتعجل في مشاركة المعلومات الخاصة، وحاول أن تلتقيا وجهاً لوجه إن أمكن وكان ذلك آمناً.</p>
+        </details>
+        <details class="faq">
+          <summary>كم صديقاً يكفي؟</summary>
+          <p>لا يوجد عدد ثابت. كثيرون يكتفون بصديقين أو ثلاثة مقرّبين مع دائرة أوسع من المعارف. المهم أن تجد من تستطيع أن تكون على طبيعتك أمامه.</p>
+        </details>
+        <details class="faq">
+          <summary>متى أنهي صداقة؟</summary>
+          <p>حين تتكرر الإساءة ولا يتغير شيء رغم الحديث الصريح. ليس كل ابتعاد خصومة، وقد تكتفي بتقليل اللقاءات والحفاظ على الاحترام دون قطيعة.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="band">
+  <div class="inner">
+    <span>دفتر الصداقة: موقع عربي عن الصديق والرفقة.</span>
+    <div class="flinks">
+      <a href="#home">أعلى الصفحة</a>
+      <a href="#qualities">الصفات</a>
+      <a href="#scenarios">مواقف</a>
+      <a href="#letter">رسالة</a>
+      <a href="#quiz">اختبار</a>
+    </div>
+  </div>
+</footer>
+</div>
+
+<script>
+(function(){
+  var $ = function(s, r){ return (r || document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var root = document.documentElement;
+
+  /* ---------- theme ---------- */
+  var themeBtn = $('#themeBtn');
+  function isDark(){
+    var t = root.getAttribute('data-theme');
+    if (t) return t === 'dark';
+    return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+  function paintTheme(){ themeBtn.textContent = isDark() ? 'الوضع الفاتح' : 'الوضع الداكن'; }
+  try { var saved = localStorage.getItem('dafter-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+  paintTheme();
+  themeBtn.addEventListener('click', function(){
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('dafter-theme', next); } catch (e) {}
+    paintTheme();
+  });
+
+  /* ---------- menu, progress, scroll-spy ---------- */
+  var nav = $('#nav'), menuBtn = $('#menuBtn');
+  menuBtn.addEventListener('click', function(){
+    var open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  $$('#nav a').forEach(function(a){
+    a.addEventListener('click', function(){ nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); });
+  });
+  var progress = $('#progress');
+  function onScroll(){
+    var h = root.scrollHeight - window.innerHeight;
+    var y = window.pageYOffset || root.scrollTop || 0;
+    progress.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, y / h) : 0) + ')';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  if ('IntersectionObserver' in window) {
+    var links = {};
+    $$('#nav a').forEach(function(a){ links[a.getAttribute('href').slice(1)] = a; });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          Object.keys(links).forEach(function(k){ links[k].removeAttribute('aria-current'); });
+          var l = links[en.target.id];
+          if (l) { l.setAttribute('aria-current', 'true'); }
+        }
+      });
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    $$('main section').forEach(function(s){ io.observe(s); });
+  }
+
+  /* ---------- copy helper ---------- */
+  function copyText(text, onOk, onFail){
+    try {
+      navigator.clipboard.writeText(text).then(onOk, onFail);
+    } catch (e) { onFail(); }
+  }
+
+  /* ---------- sayings data ---------- */
+  var S = [
+    { t: 'الصديق وقت الضيق', m: 'الصديق الصادق يُعرف في الشدة، لا في الرخاء.', c: 'الشدة' },
+    { t: 'قل لي من تصاحب أقل لك من أنت', m: 'أصحابنا يؤثرون في طباعنا وطريقة تفكيرنا، فلنحسن الاختيار.', c: 'الاختيار' },
+    { t: 'رُبَّ أخٍ لك لم تلده أمك', m: 'قد تجد في صديق ما لا تجده عند بعض الأقارب.', c: 'الوفاء' },
+    { t: 'الصاحب ساحب', m: 'الرفيق يجرّك إلى طريقه، خيراً كان أو غير ذلك.', c: 'الاختيار' },
+    { t: 'الرفيق قبل الطريق', m: 'اختر من تسافر معه قبل أن تبدأ الرحلة.', c: 'الاختيار' },
+    { t: 'الصديق من صدَقك لا من صدّقك', m: 'الصديق من يقول لك الحقيقة، لا من يوافقك على كل شيء.', c: 'الصدق' }
+  ];
+
+  /* ---------- today saying ---------- */
+  var ti = Math.floor(Date.now() / 86400000) % S.length;
+  function paintToday(){ $('#todayQ').textContent = S[ti].t; $('#todayM').textContent = S[ti].m; }
+  paintToday();
+  $('#todayBtn').addEventListener('click', function(){ ti = (ti + 1) % S.length; paintToday(); });
+
+  /* ---------- qualities tabs ---------- */
+  var Q = [
+    { k: 'الصدق', g: 'ص', d: 'أن يقول لك الحقيقة بلطف، حتى لو لم تكن ما تحب سماعه.', e: 'يخبرك أن قرارك متسرع، ثم يبقى بجانبك أياً كان ما تقرره.', a: 'متى آخر مرة قلت لصديقك رأيك بصراحة وبأدب؟' },
+    { k: 'الوفاء', g: 'و', d: 'أن يبقى على العهد حين تتغير الظروف ويبتعد الناس.', e: 'يتصل بك بعد شهور من الانشغال وكأنكما لم تفترقا.', a: 'من الصديق الذي لم تسأل عنه منذ وقت طويل؟' },
+    { k: 'الأمانة', g: 'أ', d: 'حفظ السر وصون الكلام الذي قيل في ثقة.', e: 'تحكي له أمراً خاصاً فلا تسمعه من غيره أبداً.', a: 'هل يطمئن أصدقاؤك إلى كتمانك؟' },
+    { k: 'الاحترام', g: 'ح', d: 'قبول الاختلاف في الرأي والذوق دون سخرية أو ضغط.', e: 'تختلفان في الفريق الذي تشجعانه، وتضحكان على ذلك.', a: 'هل تترك لصديقك مساحة ليكون نفسه؟' },
+    { k: 'التشجيع', g: 'ت', d: 'الفرح بنجاح الآخر ودفعه إلى الأمام حين يتردد.', e: 'يحضر عرضك الأول ويجلس في الصف الأمامي.', a: 'ما الإنجاز الذي يستحق أن تهنئ به صديقك اليوم؟' },
+    { k: 'التسامح', g: 'س', d: 'تجاوز الزلات الصغيرة والاعتذار عند الخطأ.', e: 'يعتذر عن كلمة قيلت في لحظة غضب، فتنتهي القصة.', a: 'هل هناك خلاف قديم تستطيع إنهاءه برسالة قصيرة؟' }
+  ];
+  var qlist = $('#qlist'), qpanel = $('#qpanel'), qbtns = [];
+  Q.forEach(function(q, i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'qbtn'; b.id = 'qt' + i;
+    b.setAttribute('role', 'tab'); b.setAttribute('aria-controls', 'qpanel');
+    var g = document.createElement('span'); g.className = 'g'; g.setAttribute('aria-hidden', 'true'); g.textContent = q.g;
+    b.appendChild(g); b.appendChild(document.createTextNode(q.k));
+    b.addEventListener('click', function(){ selectQ(i, false); });
+    b.addEventListener('keydown', function(ev){
+      var n = null;
+      if (ev.key === 'ArrowDown' || ev.key === 'ArrowLeft') n = (i + 1) % Q.length;
+      if (ev.key === 'ArrowUp' || ev.key === 'ArrowRight') n = (i - 1 + Q.length) % Q.length;
+      if (n !== null) { ev.preventDefault(); selectQ(n, true); }
+    });
+    qlist.appendChild(b); qbtns.push(b);
+  });
+  function selectQ(i, focus){
+    var q = Q[i];
+    qbtns.forEach(function(b, j){ b.setAttribute('aria-selected', j === i ? 'true' : 'false'); b.tabIndex = j === i ? 0 : -1; });
+    if (focus) qbtns[i].focus();
+    qpanel.setAttribute('aria-labelledby', 'qt' + i);
+    qpanel.innerHTML = '';
+    var h = document.createElement('h3'); h.textContent = q.k;
+    var d = document.createElement('p'); d.className = 'desc'; d.textContent = q.d;
+    var box = document.createElement('div'); box.className = 'qbox';
+    var e = document.createElement('div'); e.innerHTML = '<b>مثال من الواقع</b>'; e.appendChild(document.createTextNode(q.e));
+    var a = document.createElement('div'); a.className = 'ask'; a.innerHTML = '<b>اسأل نفسك</b>'; a.appendChild(document.createTextNode(q.a));
+    box.appendChild(e); box.appendChild(a);
+    qpanel.appendChild(h); qpanel.appendChild(d); qpanel.appendChild(box);
+  }
+  selectQ(0, false);
+
+  /* ---------- scenarios ---------- */
+  var SC = [
+    { s: 'صديقك يبدو حزيناً منذ أيام ولا يتحدث عما يزعجه. ماذا تفعل؟', c: [
+      { t: 'أتركه وشأنه حتى يتكلم من نفسه.', v: 'ok', f: 'احترام خصوصيته جيد، لكن غيابك قد يُفهم على أنه عدم اهتمام. يكفي أن يعرف أنك قريب.' },
+      { t: 'أجلس معه وأقول له إنني موجود إن أراد الحديث.', v: 'good', f: 'هذا أفضل خيار. لا تضغط عليه، وتترك له الباب مفتوحاً.' },
+      { t: 'أسأله مراراً حتى يعترف بما يحدث.', v: 'bad', f: 'الإلحاح يشعره بالحصار ويدفعه إلى الصمت أكثر.' }
+    ] },
+    { s: 'صديقك حقق إنجازاً كنت تتمنى أن تحققه أنت. كيف تتصرف؟', c: [
+      { t: 'أقلل من قيمة الإنجاز أمامه وأقول إن الأمر كان سهلاً.', v: 'bad', f: 'هذا يجرحه ويبعده عنك، ولا يغيّر شيئاً في وضعك.' },
+      { t: 'أتجاهل الخبر ولا أعلّق.', v: 'ok', f: 'الصمت يبدو برودة، وقد يظن أنك غير سعيد من أجله.' },
+      { t: 'أهنئه بصدق، وأعترف لنفسي أن في الأمر شيئاً من الألم.', v: 'good', f: 'الشعور بالغيرة طبيعي. المهم ألا يمنعك من الفرح لصديقك.' }
+    ] },
+    { s: 'قلت كلمة جارحة لصديقك فانزعج منك. ماذا تفعل؟', c: [
+      { t: 'أعتذر بوضوح وأقول ما أدركته من خطئي.', v: 'good', f: 'اعتذار صريح بلا شروط يعيد الثقة بسرعة.' },
+      { t: 'أنتظر حتى ينسى الأمر.', v: 'ok', f: 'قد ينسى، لكنه سيتذكر أنك لم تقل شيئاً.' },
+      { t: 'أعتذر ثم أضيف أنه أخطأ أيضاً.', v: 'bad', f: 'إضافة اللوم تلغي الاعتذار، وتحوّل الحديث إلى جدال.' }
+    ] },
+    { s: 'مرت أسابيع دون أي تواصل بينكما. ما الخطوة المناسبة؟', c: [
+      { t: 'أعاتبه على غيابه وأسأله لماذا لم يتصل.', v: 'bad', f: 'العتاب في البداية يجعله يدافع عن نفسه بدل أن يقترب.' },
+      { t: 'أنتظر أن يبدأ هو هذه المرة.', v: 'ok', f: 'قد يفكر بالطريقة نفسها، فتطول القطيعة بلا سبب.' },
+      { t: 'أرسل رسالة بسيطة أسأل فيها عن حاله.', v: 'good', f: 'خطوة صغيرة وصادقة تفتح الحديث دون إحراج.' }
+    ] }
+  ];
+  var scBox = $('#sc'), si = 0, bestCount = 0;
+  var vLabel = { good: 'اختيار ممتاز', ok: 'اختيار مقبول', bad: 'يحتاج إلى مراجعة' };
+  function renderSC(){
+    scBox.innerHTML = '';
+    if (si >= SC.length) {
+      var big = document.createElement('div'); big.className = 'big'; big.textContent = bestCount + ' / ' + SC.length;
+      var p = document.createElement('p');
+      p.style.margin = '8px 0 16px';
+      p.textContent = bestCount === SC.length ? 'اخترت الأفضل في كل المواقف. أنت صديق يُعتمد عليه.' : bestCount >= 2 ? 'أحسنت. راجع المواقف التي لم تخترها أفضل خيار فيها، فقد تجد فكرة مفيدة.' : 'لا بأس، هذه مواقف صعبة. أعد المحاولة وانظر كيف تختلف النتائج.';
+      var again = document.createElement('button'); again.type = 'button'; again.className = 'btn'; again.textContent = 'ابدأ من جديد';
+      again.addEventListener('click', function(){ si = 0; bestCount = 0; renderSC(); });
+      scBox.appendChild(big); scBox.appendChild(p); scBox.appendChild(again);
+      return;
+    }
+    var cur = SC[si];
+    var meta = document.createElement('div'); meta.className = 'sc-meta';
+    meta.innerHTML = '<span>الموقف ' + (si + 1) + ' من ' + SC.length + '</span>';
+    var dots = document.createElement('div'); dots.className = 'dots'; dots.setAttribute('aria-hidden', 'true');
+    for (var k = 0; k < SC.length; k++) { var dot = document.createElement('i'); if (k <= si) dot.className = 'on'; dots.appendChild(dot); }
+    meta.appendChild(dots);
+    var q = document.createElement('div'); q.className = 'sc-q'; q.textContent = cur.s;
+    var ch = document.createElement('div'); ch.className = 'choices';
+    var fb = document.createElement('div'); fb.setAttribute('aria-live', 'polite');
+    var foot = document.createElement('div'); foot.className = 'sc-foot';
+    cur.c.forEach(function(opt){
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'choice'; b.textContent = opt.t;
+      b.addEventListener('click', function(){
+        $$('.choice', ch).forEach(function(x){ x.disabled = true; });
+        b.classList.add(opt.v);
+        if (opt.v === 'good') bestCount++;
+        fb.innerHTML = '';
+        var v = document.createElement('div'); v.className = 'verdict ' + opt.v;
+        var bb = document.createElement('b'); bb.textContent = vLabel[opt.v];
+        v.appendChild(bb); v.appendChild(document.createTextNode(opt.f));
+        fb.appendChild(v);
+        var nx = document.createElement('button'); nx.type = 'button'; nx.className = 'btn';
+        nx.textContent = si === SC.length - 1 ? 'عرض النتيجة' : 'الموقف التالي';
+        nx.addEventListener('click', function(){ si++; renderSC(); });
+        foot.appendChild(nx); nx.focus();
+      });
+      ch.appendChild(b);
+    });
+    scBox.appendChild(meta); scBox.appendChild(q); scBox.appendChild(ch); scBox.appendChild(fb); scBox.appendChild(foot);
+  }
+  renderSC();
+
+  /* ---------- sayings list ---------- */
+  var cats = ['الكل', 'الاختيار', 'الشدة', 'الصدق', 'الوفاء'];
+  var curCat = 'الكل';
+  var chipsBox = $('#chips'), listBox = $('#sayings');
+  function renderChips(){
+    chipsBox.innerHTML = '';
+    cats.forEach(function(c){
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = c;
+      b.setAttribute('aria-pressed', c === curCat ? 'true' : 'false');
+      b.addEventListener('click', function(){ curCat = c; renderChips(); renderList(); });
+      chipsBox.appendChild(b);
+    });
+  }
+  function renderList(){
+    listBox.innerHTML = '';
+    S.filter(function(s){ return curCat === 'الكل' || s.c === curCat; }).forEach(function(s){
+      var card = document.createElement('figure'); card.className = 'saying'; card.style.margin = '0';
+      var q = document.createElement('q'); q.textContent = s.t;
+      var p = document.createElement('p'); p.textContent = s.m;
+      var row = document.createElement('div'); row.className = 'row';
+      var tag = document.createElement('span'); tag.className = 'tag up'; tag.textContent = s.c;
+      var cp = document.createElement('button'); cp.type = 'button'; cp.className = 'btn ghost small'; cp.textContent = 'نسخ';
+      cp.addEventListener('click', function(){
+        copyText(s.t, function(){ cp.textContent = 'تم النسخ'; setTimeout(function(){ cp.textContent = 'نسخ'; }, 1500); },
+                      function(){ cp.textContent = 'تعذّر النسخ'; setTimeout(function(){ cp.textContent = 'نسخ'; }, 1500); });
+      });
+      row.appendChild(tag); row.appendChild(cp);
+      card.appendChild(q); card.appendChild(p); card.appendChild(row);
+      listBox.appendChild(card);
+    });
+  }
+  renderChips(); renderList();
+
+  /* ---------- letter maker ---------- */
+  var out = $('#out');
+  function build(){
+    var n = $('#fname').value.trim();
+    var f = $('#fgender').value === 'f';
+    var occ = $('#focc').value, tone = $('#ftone').value;
+    function k(m, fm){ return f ? fm : m; }
+    var d = f ? 'صديقتي' : 'صديقي';
+    var head = d + (n ? ' ' + n : '') + '،\n';
+    var pre = n ? n + '، ' : '';
+    var T = {
+      miss: {
+        warm: head + 'اشتقت إليك وإلى أحاديثنا. مرّ وقت طويل، وأحببت أن تعرف أنك ما زلت' + k('', 'ِ') + ' في بالي. متى نلتقي لنشرب شيئاً ونتحدث كما كنا؟\nدمت' + k('', 'ِ') + ' لي.',
+        short: pre + 'اشتقت لك. متى نلتقي؟'
+      },
+      thanks: {
+        warm: head + 'شكراً لأنك كنت' + k('', 'ِ') + ' بجانبي حين احتجتك. وقفتك لم تكن عادية، وسأذكرها دائماً. أشكر الله على وجودك في حياتي.',
+        short: pre + 'شكراً على وقوفك معي. لن أنسى ذلك.'
+      },
+      sorry: {
+        warm: head + 'أعرف أنني أخطأت في حقك، وأعتذر بصدق. لا أريد أن تفسد هذه الغلطة صداقتنا. إن شئت' + k('', 'ِ') + ' أن نتحدث فأنا أسمعك.',
+        short: pre + 'أعتذر عما حدث، ولا أريد أن يفسد صداقتنا.'
+      },
+      congrats: {
+        warm: head + 'مبارك لك! أعرف كم تعبت' + k('', 'ِ') + ' من أجل هذا، وأنت تستحق' + k('', 'ين') + ' كل خير. فرحتي بك كبيرة.',
+        short: pre + 'مبارك لك! تستحق' + k('', 'ين') + ' كل خير.'
+      },
+      encourage: {
+        warm: head + 'أعرف أن الأيام صعبة الآن، لكنني أعرفك جيداً وأثق بقدرتك على تجاوزها. إن احتجت' + k('', 'ِ') + ' إلى أي شيء فأنا بجانبك.',
+        short: pre + 'أنت أقوى مما تظن' + k('', 'ين') + '. أنا بجانبك.'
+      }
+    };
+    out.value = T[occ][tone];
+  }
+  ['fname', 'fgender', 'focc', 'ftone'].forEach(function(id){
+    var el = document.getElementById(id);
+    el.addEventListener('input', build); el.addEventListener('change', build);
+  });
+  build();
+  var copyHint = $('#copyHint'), hintTimer;
+  function hint(t){ copyHint.textContent = t; clearTimeout(hintTimer); hintTimer = setTimeout(function(){ copyHint.textContent = ''; }, 2500); }
+  $('#copyLetter').addEventListener('click', function(){
+    copyText(out.value, function(){ hint('تم نسخ الرسالة'); },
+      function(){ out.focus(); out.select(); hint('حدّد النص وانسخه من القائمة'); });
+  });
+
+  /* ---------- quiz ---------- */
+  var boxes = $$('#quizForm input[type="checkbox"]');
+  var qm = [
+    'ضع علامة على ما ينطبق على صديقك لترى النتيجة.',
+    'هناك نقاط تستحق حديثاً هادئاً بينكما.',
+    'هناك نقاط تستحق حديثاً هادئاً بينكما.',
+    'هناك نقاط تستحق حديثاً هادئاً بينكما.',
+    'صداقة جيدة، وفيها ما يمكن تقويته بمزيد من الاهتمام.',
+    'صداقة جيدة، وفيها ما يمكن تقويته بمزيد من الاهتمام.',
+    'صداقة جيدة، وفيها ما يمكن تقويته بمزيد من الاهتمام.',
+    'صداقة نادرة، حافظ عليها وعبّر له عن تقديرك.',
+    'صداقة نادرة، حافظ عليها وعبّر له عن تقديرك.'
+  ];
+  function updateQuiz(){
+    var n = boxes.filter(function(b){ return b.checked; }).length;
+    $('#score').textContent = n + ' / ' + boxes.length;
+    $('#msg').textContent = qm[n];
+    $('#meter').style.width = (n / boxes.length * 100) + '%';
+  }
+  boxes.forEach(function(b){ b.addEventListener('change', updateQuiz); });
+  $('#reset').addEventListener('click', function(){ boxes.forEach(function(b){ b.checked = false; }); updateQuiz(); });
+  updateQuiz();
+})();
+</script>
+
+</body>
+</html>
